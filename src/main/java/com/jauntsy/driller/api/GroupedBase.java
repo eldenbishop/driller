@@ -57,6 +57,11 @@ public class GroupedBase
         return (GroupType) GroupedBase.wrap(_impl.combine(combiner));
     }
 
+    @Override
+    public GroupType add(Adder<? super KeyTupleType, ? super ValueTupleType> combiner) {
+        return (GroupType) GroupedBase.wrap(_impl.combine(combiner));
+    }
+
     @Deprecated
     @Override
     public TableType ungroup() {

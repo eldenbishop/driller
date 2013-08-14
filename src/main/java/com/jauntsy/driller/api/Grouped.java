@@ -16,6 +16,8 @@ public interface Grouped<TableType extends Table, TupleType extends Tuple, KeyTu
 
     public GroupType combine(Combiner<? super KeyTupleType, ? super ValueTupleType> combiner);
 
+    public GroupType add(Adder<? super KeyTupleType, ? super ValueTupleType> combiner);
+
 //    public GroupType combine(ColumnCombiner... columnCombiner);
 
     public <

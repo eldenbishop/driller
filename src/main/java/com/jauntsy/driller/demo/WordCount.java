@@ -106,13 +106,12 @@ public class WordCount extends Configured implements Tool, Serializable {
 
     public void typedC() {
         Driller mr = newDriller();
-        Table2<String,Long> wordCounts = mr.loadText("/tmp/quotes.txt").mapTo(Table.of(strings("word"), longs("count")), new Mapper<Tuple1<String>, Tuple2<String, Long>>() {
+        mr.loadText("/tmp/quotes.txt").mapTo(Table.of(strings("word"), longs("count")), new Mapper<Tuple1<String>, Tuple2<String, Long>>() {
             public void map(Tuple1<String> tuple, Emitter e) {
                 for (String word : tuple.get1st().split("\\s"))
                     e.emit(Tuple.of2(word, 1L));
             }
-        });
-        wordCounts.groupBy("word").combine(new Adder<Tuple1<String>, Tuple1<Long>>(Tuple.of(0L)) {
+        }).groupBy("word").combine(new Adder<Tuple1<String>, Tuple1<Long>>(Tuple.of(0L)) {
             @Override
             public Tuple1<Long> add(Tuple1<Long> a, Tuple1<Long> b) {
                 return Tuple.of(a.get1st() + b.get1st());
